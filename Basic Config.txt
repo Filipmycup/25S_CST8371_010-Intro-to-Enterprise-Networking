@@ -1,0 +1,29 @@
+hostname waso0006
+!
+no ip domain-lookup
+!
+enable secret class
+!
+service password-encryption
+!
+username admin secret cisco
+!
+ip domain-name cnap.cst
+!
+ip ssh version 2
+!
+line con 0
+logging synchronous
+exec-timeout 90
+!
+exit
+!
+line vty 0 15
+logging synchronous
+login local
+transport input ssh telnet
+exec-timeout 90
+!
+exit
+!
+crypto key generate rsa general-keys modulus 1024
