@@ -1,0 +1,81 @@
+hostname waso0006
+!
+no ip domain-lookup
+!
+enable secret class
+!
+service password-encryption
+!
+username admin secret cisco
+!
+ip domain-name cnap.cst
+!
+ip ssh version 2
+!
+line con 0
+logging synchronous
+exec-timeout 90
+!
+exit
+!
+line vty 0 15
+logging synchronous
+login local
+transport input ssh telnet
+exec-timeout 90
+!
+exit
+!
+crypto key generate rsa general-keys modulus 1024
+!
+vtp mode transparent
+!
+vlan 10
+!
+name waso0006-VLAN10
+!
+vlan 666
+!
+name waso0006-VLAN666
+!
+interface range gi1/0/2-10
+!
+switchport access vlan 10
+!
+no shutdown
+!
+interface range gi1/0/11-24
+!
+switchport access vlan 666
+!
+shutdown
+!
+interface vlan10
+!
+description waso0006 LAN Interface
+!
+ipv6 address fe80::10 link-local
+!
+ipv6 address 2010:acad:88:aa::10/64
+!
+no shutdown
+!
+interface gi0/1
+!
+description Link to RB
+!
+ipv6 address fe80::10 link-local
+!
+ipv6 address 2010:acad:88:ab::10/64
+!
+no shutdown
+!
+interface loopback10
+!
+description ULA loopback
+!
+ipv6 address fe80::10 link-local
+!
+ipv6 address fd00:88:aa::10/64
+
+

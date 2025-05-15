@@ -1,0 +1,80 @@
+hostname waso0006-RB
+!
+no ip domain-lookup
+!
+enable secret class
+!
+service password-encryption
+!
+username admin secret cisco
+!
+ip domain-name cnap.cst
+!
+ip ssh version 2
+!
+line con 0
+logging synchronous
+exec-timeout 90
+!
+exit
+!
+line vty 0 15
+logging synchronous
+login local
+transport input ssh telnet
+exec-timeout 90
+!
+exit
+!
+crypto key generate rsa general-keys modulus 1024
+!
+no ip tftp source-interface
+!
+ipv6 unicast-routing
+!
+interface gi0/0/0
+!
+description Link to Remote
+!
+ipv6 address fe80::11 link-local
+!
+ipv6 address 2001:fab:203::11/64
+!
+no shutdown
+!
+interface gi0/0/1
+!
+description Link to SA
+!
+ipv6 address fe80::11 link-local
+!
+ipv6 address 2010:acad:88:ab::11/64
+!
+no shutdown
+!
+interface gi0/0/2
+!
+description Link to RC
+!
+ipv6 address fe80::11 link-local
+!
+ipv6 address 2010:acad:88:bc::11/64
+!
+no shutdown
+!
+exit
+!
+ipv6 route 2010:acad:88:aa::/64 g0/0/1 fe80::10
+!
+ipv6 route fd00:88:aa::/64 g0/0/1 fe80::10
+!
+ipv6 route 2010:acad:88:cc::/64 g0/0/2 fe80::12
+!
+ipv6 route fd00:88:cc::/64 g0/0/2 fe80::12
+!
+ipv6 route ::/0 g0/0/0 2001:fab:203::254
+!
+
+
+
+
